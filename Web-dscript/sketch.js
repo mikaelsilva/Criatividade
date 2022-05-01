@@ -36,6 +36,26 @@ function setup() {
   
 }
 
+function misturar(){
+  if(glyphs.length > 0 ){
+    for(let i = 0; i < glyphs.length;i++){
+      //alert("glyph?")
+      glyphs[i].updateXY(Math.floor(Math.random()*(width-glyphs[i].w)), Math.floor(Math.random()*(height-glyphs[i].h)))
+    }
+  }else{
+    let offset = 0;
+    for(let i = 0; i < indexWord-1;i++){
+      offset+=words[i].length
+    }
+    for(let i = 0; i < offset+words[indexWord-1].length; i++){
+      imgs[i].x = Math.floor(Math.random()*(width-imgs[i].w))
+      imgs[i].y = Math.floor(Math.random()*(height-imgs[i].h))
+    }
+  }
+  
+  
+}
+
 function draw() {
   background(220);
 

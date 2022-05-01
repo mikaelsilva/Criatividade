@@ -19,7 +19,16 @@ class glyph{
           this.rollover = false;
         }
     }
+    updateXY(newX,newY){
 
+        let x = newX 
+        let y = newY
+        for(let i = 0; i < this.imgs.length; i++){
+            this.imgs[i].updateInsideGlyph(x - this.x,y - this.y);
+        }
+        this.x = x;
+        this.y = y;
+    }
     update() {
         // Adjust location if being dragged
         if (this.dragging) {
