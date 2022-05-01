@@ -3,6 +3,7 @@ let imgs = [];
 let glyphs = [];
 let index = 0;
 let indexWord = 0;
+let kaledoscope = false
 let words;
 
 function preload(){
@@ -37,16 +38,38 @@ function setup() {
 
 function draw() {
   background(220);
-  //rect(30, 80, 255, 255);
-  for(let i = 0; i < imgs.length; i++){
-    imgs[i].update()
-    imgs[i].show()
+
+  if(kaledoscope == true){
+    translate(width/2,height/2)
+    let angle = 30
+    for(let i = 0; i<angle;i++){
+      rotate(angle)
+      push()
+      scale(1,-1);
+      for(let i = 0; i < imgs.length; i++){
+        imgs[i].update()
+        imgs[i].show()
+      }
+      for(let i = 0; i < glyphs.length;i++){
+        //alert("glyph?")
+        glyphs[i].update();
+        glyphs[i].over();
+      }
+      pop()
+    }
+  }else{
+    //rect(30, 80, 255, 255);
+    for(let i = 0; i < imgs.length; i++){
+      imgs[i].update()
+      imgs[i].show()
+    }
+    for(let i = 0; i < glyphs.length;i++){
+      //alert("glyph?")
+      glyphs[i].update();
+      glyphs[i].over();
+    }
   }
-  for(let i = 0; i < glyphs.length;i++){
-    //alert("glyph?")
-    glyphs[i].update();
-    glyphs[i].over();
-  }
+
 }
 
 function mousePressed(){
@@ -97,6 +120,14 @@ function verificaSuperposicao(){
     }
   }
   return valido;
+}
+
+function toggleKaledoscope(){
+  if(kaledoscope){
+    kaledoscope=false;
+  }else{
+    kaledoscope=true;
+  }
 }
 
 function updateOrSave(){
