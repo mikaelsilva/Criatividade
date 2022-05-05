@@ -36,13 +36,29 @@ class letter{
         this.x+=x;
         this.y+=y;
     }
+    show2(sketch){
+        if(this.isOnShow){
+            sketch.image(this.img, this.x, this.y,this.w,this.h);
+        }
+    }
     show() {
         if(this.isOnShow){
             image(this.img, this.x, this.y,this.w,this.h);
         }
         
     }
-
+    pressed2(sketch) {
+        if(this.isOnUpdate){
+            // Did I click on the rectangle?
+            if (sketch.mouseX > this.x && sketch.mouseX < this.x + this.w && sketch.mouseY > this.y && sketch.mouseY < this.y + this.h) {
+                this.dragging = true;
+                // If so, keep track of relative location of click to corner of rectangle
+                this.offsetX = this.x - mouseX;
+                this.offsetY = this.y - mouseY;
+            }
+        }
+        
+    }
     pressed() {
         if(this.isOnUpdate){
             // Did I click on the rectangle?

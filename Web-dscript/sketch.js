@@ -21,6 +21,7 @@ function preload(){
 }
 
 function setup() {
+  colorMode(HSB,150,100,10,1)
   c = createCanvas(720, 640);
   let offset = 0;
   for(let i = 0; i < indexWord;i++){
@@ -56,21 +57,42 @@ function misturar(){
   
 }
 
+function getCircularReplacer() {
+  const seen = new WeakSet();
+    return (key, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (seen.has(value)) {
+          return;
+        }
+        seen.add(value);
+      }
+      return value;
+    };
+}
+
+function saveInStorage(key, data) {
+  let dados = JSON.stringify(data, getCircularReplacer());
+  sessionStorage.setItem(key, dados);
+}
+
 function draw() {
   background(220);
 
   if(kaledoscope == true){
     translate(width/2,height/2)
-    let angle = 30
+    let angle = 14
+    
     for(let i = 0; i<angle;i++){
       rotate(angle)
       push()
       scale(1,-1);
       for(let i = 0; i < imgs.length; i++){
+        tint(imgs[i].x,imgs[i].y,100,1)
         imgs[i].update()
         imgs[i].show()
       }
       for(let i = 0; i < glyphs.length;i++){
+        tint(glyphs[i].x,imgs[i].y,100,1)
         //alert("glyph?")
         glyphs[i].update();
         glyphs[i].over();
@@ -151,10 +173,10 @@ function toggleKaledoscope(){
 }
 
 function updateOrSave(){
-  if(indexWord > words.length){
-    saveCanvas(c, 'myCanvas', 'jpg');
-  }
-  else if(indexWord == words.length){
+  //if(indexWord > words.length){
+  //  saveCanvas(c, 'myCanvas', 'jpg');
+  //}
+  if(indexWord == words.length){
     
     for(let i = 0; i < imgs.length;i++){
       imgs[i].toggleOnOff(true,false);
@@ -186,6 +208,9 @@ function updateOrSave(){
       offset+=words[i_words].length;
       indexWord+=1;
     }
+    
+    saveInStorage("imgs",imgs);
+    saveInStorage("glyphs",glyphs);
     
   }else{
     if(verificaSuperposicao()){
