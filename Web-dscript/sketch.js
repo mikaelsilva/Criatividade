@@ -209,8 +209,15 @@ function updateOrSave(){
       indexWord+=1;
     }
     
-    saveInStorage("imgs",imgs);
-    saveInStorage("glyphs",glyphs);
+    saveInStorage("letters",location.search.substring(1));
+    xs = []
+    ys = []
+    for(let i = 0; i < imgs.length;i++){
+      xs.push(imgs[i].x)
+      ys.push(imgs[i].y)
+    }
+    saveInStorage("ys",ys);
+    saveInStorage("xs",xs);
     
   }else{
     if(verificaSuperposicao()){

@@ -4,6 +4,11 @@ let cOriginal;
 let cCaleidoscopio;
 let sketch2;
 
+function getOfStorage(key) {
+  let dados = JSON.parse(sessionStorage.getItem(key));
+  return dados;
+}
+
 const sOriginal = ( sketch ) => {
 
   let indexWord = 0;
@@ -13,12 +18,17 @@ const sOriginal = ( sketch ) => {
   sketch.preload = () =>{
     sketch2 = sketch;
     let l;
-    var queryString = location.search.substring(1);
+
+    var queryString = getOfStorage("letters");//location.search.substring(1);
     words = queryString.split("|");
+    xs = getOfStorage("xs");
+    ys = getOfStorage("ys");
+    count = 0
     for(let i = 0; i < words.length;i++){
       for(let j = 0; j < words[i].length;j++){
         console.log('alfabeto/'+words[i][j].toUpperCase()+'.png')
-        l = new letter(sketch.loadImage('alfabeto/'+words[i][j].toUpperCase()+'.png'),40*j,50,50,50);
+        l = new letter(sketch.loadImage('alfabeto/'+words[i][j].toUpperCase()+'.png'),xs[count],ys[count],50,50);
+        count+=1;
         imgs.push(l)
       }
     }
@@ -142,7 +152,7 @@ function exportOriginal(){
 function misturar(){
   if(glyphs.length > 0 ){
     for(let i = 0; i < glyphs.length;i++){
-      //alert("glyph?")
+      
       glyphs[i].updateXY(Math.floor(Math.random()*(sketch2.width-glyphs[i].w)), Math.floor(Math.random()*(sketch2.height-glyphs[i].h)))
     }
   } 
