@@ -53,8 +53,8 @@ class letter{
             if (sketch.mouseX > this.x && sketch.mouseX < this.x + this.w && sketch.mouseY > this.y && sketch.mouseY < this.y + this.h) {
                 this.dragging = true;
                 // If so, keep track of relative location of click to corner of rectangle
-                this.offsetX = this.x - mouseX;
-                this.offsetY = this.y - mouseY;
+                this.offsetX = this.x - sketch.mouseX;
+                this.offsetY = this.y - sketch.mouseY;
             }
         }
         
