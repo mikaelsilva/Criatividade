@@ -9,36 +9,33 @@ let words;
 let textWord;
 let name_image = 'exemplo_usuario/exemplo1.png';
 
-function getOfStorage(key) {
-  let dados = JSON.parse(sessionStorage.getItem(key));
-  return dados;
-}
-
 //Pega as palavras que foram inseridas pelo usuario (Ex: mikael|vidal|da|silva)
-function preload(){
- // console.log("PRELOADDDDDDDDDDDDDDDDDDDDDD");
- // console.log("words", words);
-  var teste = getOfStorage("words");
-  console.log("teste", teste);
-
+ function preload(){
+  console.log("PRELOADDDDDDDDDDDDDDDDDDDDDD");
   let l;
-  var queryString = location.search.substring(1);
-  words = queryString.split("|");
+ // var queryString = location.search.substring(1);
+ // words = queryString.split("|");
+  var queryString = document.getElementById("inputPhrase");
+//var value = queryString.value;
+var value = "oi tudo bom";
+
+  words = value.split(" ");
+  console.log("words hre: ", words);
   for(let i = 0; i < words.length;i++){
     for(let j = 0; j < words[i].length;j++){
       //console.log('alfabeto/'+words[i][j].toUpperCase()+'.png')
-      l = new letter(loadImage('alfabeto/'+words[i][j].toUpperCase()+'.png'),40*j,50,50,50);
+      l = new letter(loadImage('alfabeto/'+words[i][j].toUpperCase()+'.png'),40*j*(i+1),50,50,50);
       imgs.push(l)
     }
     
   }
-
   
-}
+} 
 
 //Função responsavel por criar a tela preta (canvas, onde o DSCRIPT | PALAVRA | IMAGEM INSPIRAÇÃO) vão aparecer
 function setup() {
   console.log("SETUPPPPPPPPPPPPPPPPPPPPPPPPP");
+imgs = [];
   img_example=loadImage(name_image);
   //colorMode(HSB,150,100,10,1)
   c = createCanvas(720, 640);
@@ -47,11 +44,30 @@ function setup() {
   for(let i = 0; i < indexWord;i++){
     offset+=words[i].length
   }
-  for(let i = 0; i < offset; i++){
+  /* for(let i = 0; i < offset; i++){
     imgs[i].toggleOnOff(false,false);
+  } */
+  console.log("wordsss ", words);
+  for(let i = offset; i < offset+words[indexWord]; i++){
+    imgs[i].toggleOnOff(true,false);
   }
-  for(let i = offset; i < offset+words[indexWord].length; i++){
-    imgs[i].toggleOnOff(true,true);
+  indexWord+=1;
+  
+}
+
+function test() {
+  console.log("TESTSSTSTS");
+  
+  let offset = 0;
+  for(let i = 0; i < indexWord;i++){
+    offset+=words[i].length
+  }
+  /* for(let i = 0; i < offset; i++){
+    imgs[i].toggleOnOff(false,false);
+  } */
+  console.log("wordsss ", words);
+  for(let i = offset; i < offset+words[indexWord]; i++){
+    imgs[i].toggleOnOff(true,false);
   }
   indexWord+=1;
   
@@ -99,39 +115,9 @@ function saveInStorage(key, data) {
 }
 
 //Desenha a tela contendo a palavra atual, a convesão em DSCRIPT para o usuario alterar e uma imagem de inspiração
-function draw() {
-  //console.log("DRAWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
+  function draw() {
+  console.log("DRAWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW");
   background(0);
-
-  textSize(30);
-  fill(255,255,255);
-  text(words[indexWord-1],320,600);
-  console.log("----------------------- ",words[indexWord-1]);
-  
-  if(kaledoscope == true){
-    translate(width/2,height/2)
-    let angle = 14
-    
-    for(let i = 0; i<angle;i++){
-      rotate(angle)
-      push()
-      scale(1,-1);
-      for(let i = 0; i < imgs.length; i++){
-        tint(imgs[i].x,imgs[i].y,100,1)
-        imgs[i].update()
-        imgs[i].show()
-      }
-      for(let i = 0; i < glyphs.length;i++){
-        tint(glyphs[i].x,imgs[i].y,100,1)
-        //alert("glyph?")
-        glyphs[i].update();
-        glyphs[i].over();
-      }
-      pop()
-    }
-  }else{
-    //console.log("DRAWWWWWWWWWWWWWWWWWWWWWWWW2 ");
-    //rect(30, 80, 255, 255);
     for(let i = 0; i < imgs.length; i++){
       imgs[i].update()
       imgs[i].show()
@@ -141,10 +127,8 @@ function draw() {
       glyphs[i].update();
       glyphs[i].over();
     }
-  }
-
-  image(img_example,0,500);
-}
+  
+} 
 
 //Função auxiliar
 function mousePressed(){

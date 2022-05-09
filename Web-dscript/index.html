@@ -6,38 +6,176 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>p5.js example</title>
   <style>
+    .title {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .form {
+      text-align: center;
+    }
+
+    .form-title {
+      margin-top: 40px;
+      margin-bottom: 5px;
+      font-size: 35px;
+      
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .form-input {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      height: 20px;
+      width: 80%;      
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .submit {
+      margin-top: 10px;
+      margin-bottom: 5px;
+      height: 50px;
+      width: 20%;      
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
+      font-family: Arial, Helvetica, sans-serif;
       padding: 0;
       margin: 0;
+      background-color: blueviolet;
+    }
+
+    /* Style the header */
+    .header {
+      background-color: blueviolet;
+      padding: 30px;
+      text-align: center;
+      font-size: 50px;
+    }
+
+    /* Container for flexboxes */
+    .row {
+      display: -webkit-flex;
+      display: flex;
+      width: 102%;
+      background-color: blueviolet;
+      padding: 10px;
+      text-align: center;
+      margin-right: 0%;
+    }
+
+    /* Create three unequal columns that sits next to each other */
+    .column {
+     
+      height: 200px;
+      background-color: blueviolet;
+    
+      /* Should be removed. Only for demonstration */
+    }
+
+    /* Left and right column */
+    .column.side {
+      -webkit-flex: 1;
+      -ms-flex: 1;
+      flex: 1;
+     width: 100%;
+    }
+
+    /* Middle column */
+    .column.middle {
+      -webkit-flex: 2;
+      -ms-flex: 2;
+      flex: 2;
+      text-align: center;
+      box-sizing: border-box;
+
+    }
+
+    /* Style the footer */
+    .footer {
+      background-color: blueviolet;
+      padding: 10px;
+      text-align: center;
+      height: 450px;
+      align-items: center;
+    }
+
+    /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+    @media (max-width: 600px) {
+      .row {
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      }
     }
   </style>
   <script src="../p5.js"></script>
-  <!-- <script src="../addons/p5.sound.js"></script> -->
-  <script src="sketch.js"></script>
+  <!-- <script src="sketch.js"></script> -->
+  <script src="primeira_tela.js"></script>
   <script src="letter.js"></script>
   <script src="glyph.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
-  <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.11/p5.min.js"></script>-->
-  <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.11/addons/p5.dom.js"></script>-->
-  <!--<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>-->
-  <!--<script src="html2canvas.js" type="text/javascript"></script>-->
 
-  
-  
 </head>
 
 <body>
-  <main>
-  </main>
-  <button onclick="updateOrSave()">
-    saveCanvas
-  </button>
-  <button onclick="toggleKaledoscope()">
-    caleidoscopio
-  </button>
-  <button onclick="misturar()">
-    misturar
-  </button>
+
+  <div class="header">
+    <h2>DSCRIPT</h2>
+  </div>
+
+  <div class="row">
+    <div class="column side" >
+      
+    </div>
+    <div class="column middle"  >
+      <form class="form-inline" style="margin-top: 15%;">
+        <div class="form-row" style="width: 100%;">
+          <!-- <label for="exampleInputEmail1" style="padding: 10px;">Insira uma frase</label> -->
+          <div class="col-8" style="display: flex;
+          align-items: left;">
+            <input style=" width: 100%;" type="text" class="form-control-lg" id="inputPhrase" value=""
+          aria-describedby="emailHelp" placeholder="Insira uma frase">
+          <!-- <small id="emailHelp" class="form-text text-muted" style="padding: 10px;"></small> -->
+          </div>
+          <div class="col-1" style="display: flex; align-items: right; padding-left: 10px; ">
+            <button type="button" class="btn btn-light" onclick="preload()">Ok</button>
+          </div>       
+          <div class="col-3" style="align-items: right; padding-left: 20px;">
+            <a >
+              <button  onclick="retorna()" type="button" class="btn btn-light" style="height: 100%;">Próximo passo</button>
+          </a>
+          </div>   
+         
+        </div>
+      </form>
+   
+      <!-- <button onclick="updateOrSave()">
+        OK
+      </button> -->
+    </div>
+    <div class="column side" >
+      
+    </div>
+  </div>
+
+  <div class="footer">
+   
+    <div>
+      <main id="proxima">
+      </main>
+    </div>
+    
+    
+  </div>
 </body>
 
 </html>
